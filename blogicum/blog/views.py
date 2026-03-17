@@ -37,7 +37,11 @@ def post_detail(request, post_id):
 
 
 def category_posts(request, slug):
-    category = get_object_or_404(Category, slug=slug, is_published=True)
+    category = get_object_or_404(
+        Category,
+        slug=slug,
+        is_published=True
+    )
 
     posts = get_posts().filter(category=category)
 
@@ -45,4 +49,8 @@ def category_posts(request, slug):
         'category': category,
         'posts': posts,
     }
-    return render(request, 'blog/category.html', context)
+    return render(
+        request,
+        'blog/category.html',
+        context
+    )
