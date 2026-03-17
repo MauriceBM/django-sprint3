@@ -4,7 +4,9 @@ from .models import Post, Category
 
 
 def get_posts():
-    return Post.objects.select_related('category', 'author', 'location').filter(
+    return Post.objects.select_related(
+        'category', 'author', 'location'
+    ).filter(
         is_published=True,
         category__is_published=True,
         pub_date__lte=timezone.now()
