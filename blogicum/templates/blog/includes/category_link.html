@@ -1,7 +1,7 @@
-{% if category and category.slug %}
-  <a href="{% url 'blog:category_posts' category_slug=category.slug %}">
-    {{ category.title }}
+{% if post.category and post.category.slug %}
+  <a href="{% url 'blog:category_posts' category_slug=post.category.slug %}">
+    {{ post.category.title }}
   </a>
-{% else %}
-  {{ category.title }}
+{% elif post.category %}
+  {{ post.category.title }}
 {% endif %}
