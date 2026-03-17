@@ -15,42 +15,36 @@ def get_posts():
 
 def index(request):
     posts = get_posts()[:5]
-    context = {
-        'posts': posts,
-    }
-    return render(request, 'blog/index.html', context)
+
+    return render(request, 'blog/index.html', {'posts': posts})
 
 
-def post_detail(request, post_id):
+def post_detail(request, id):
     post = get_object_or_404(
         Post.objects.select_related('category', 'author', 'location'),
-        pk=post_id,
+        pk=id,
         is_published=True,
         category__is_published=True,
         pub_date__lte=timezone.now()
     )
 
-    context = {
-        'post': post,
-    }
-    return render(request, 'blog/post_detail.html', context)
+    return render(request, 'blog/post_detail.html', {'post': post})
 
 
-def category_posts(request, slug):
+def category_posts(request, category_slug):
     category = get_object_or_404(
         Category,
-        slug=slug,
+        slug=category_slug,
         is_published=True
     )
 
     posts = get_posts().filter(category=category)
 
-    context = {
-        'category': category,
-        'posts': posts,
-    }
     return render(
         request,
-        'blog/category.html',
-        context
+        'blog/category.html', {
+            'category': category,
+            'posts': posts
+        }
+
     )

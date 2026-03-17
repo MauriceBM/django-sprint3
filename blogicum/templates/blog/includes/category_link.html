@@ -2,6 +2,6 @@
   <a href="{% url 'blog:category_posts' category_slug=category.slug %}">
     {{ category.title }}
   </a>
-{% elif category %}
+{% else %}
   {{ category.title }}
 {% endif %}
