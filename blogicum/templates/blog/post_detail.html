@@ -19,8 +19,7 @@
       {% endif %}<br>
       <small>
         От автора @{{ post.author.username }} в категории 
-        {# Передаём категорию в include #}
-        {% include "includes/category_link.html" with category=post.category %}
+        {% include "blog/includes/category_link.html" with category=post.category %}
       </small>
     </p>
     

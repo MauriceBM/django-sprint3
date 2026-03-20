@@ -1,29 +1,29 @@
-{% extends "base.html" %}
-
-{% block title %}
-  {{ post.title }} | 
-  {% if post.location and post.location.is_published %}
-    {{ post.location.name }} |
-  {% endif %} 
-  {{ post.pub_date|date:"d E Y" }}
-{% endblock %}
-
-{% block content %}
-  <article>
-    <p>
-      {{ post.pub_date|date:"d E Y" }} | 
-      {% if post.location and post.location.is_published %}
-        {{ post.location.name }}
-      {% else %}
-        Планета Земля
-      {% endif %}<br>
-      <small>
-        От автора @{{ post.author.username }} в категории 
-        {% include "includes/category_link.html" with category=post.category %}
-      </small>
-    </p>
-    
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.text|linebreaksbr }}</p>
-  </article> 
-{% endblock %}
+<article class="mb-4">
+  <h3>
+    <a href="{% url 'blog:post_detail' post_id=post.id %}">
+      {{ post.title }}
+    </a>
+  </h3>
+  
+  <p class="text-muted">
+    {{ post.pub_date|date:"d E Y" }} | 
+    {% if post.location and post.location.is_published %}
+      {{ post.location.name }}
+    {% else %}
+      Планета Земля
+    {% endif %}
+  </p>
+  
+  <p class="mb-0">
+    <small>
+      От автора @{{ post.author.username }} в категории 
+      {% if post.category and post.category.slug %}
+        <a href="{% url 'blog:category_posts' category_slug=post.category.slug %}">
+          {{ post.category.title }}
+        </a>
+      {% elif post.category %}
+        {{ post.category.title }}
+      {% endif %}
+    </small>
+  </p>
+</article>
