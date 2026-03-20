@@ -5,7 +5,24 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class Category(models.Model):
+class PublishedMixin(models.Model):
+    """Абстрактный миксин для полей публикации."""
+
+    is_published = models.BooleanField(
+        default=True,
+        verbose_name='Опубликовано',
+        help_text='Снимите галочку, чтобы скрыть публикацию.'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Добавлено'
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Category(PublishedMixin):
     title = models.CharField(
         max_length=256,
         verbose_name='Заголовок'
@@ -20,16 +37,6 @@ class Category(models.Model):
                   'разрешены символы латиницы, цифры, '
                   'дефис и подчёркивание.'
     )
-    is_published = models.BooleanField(
-        default=True,
-        verbose_name='Опубликовано',
-        help_text='Снимите галочку, чтобы скрыть '
-                  'публикацию.'
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Добавлено'
-    )
 
     class Meta:
         verbose_name = 'категория'
@@ -39,20 +46,10 @@ class Category(models.Model):
         return self.title
 
 
-class Location(models.Model):
+class Location(PublishedMixin):
     name = models.CharField(
         max_length=256,
         verbose_name='Название места'
-    )
-    is_published = models.BooleanField(
-        default=True,
-        verbose_name='Опубликовано',
-        help_text='Снимите галочку, чтобы скрыть '
-                  'публикацию.'
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Добавлено'
     )
 
     class Meta:
@@ -63,7 +60,7 @@ class Location(models.Model):
         return self.name
 
 
-class Post(models.Model):
+class Post(PublishedMixin):
     title = models.CharField(
         max_length=256,
         verbose_name='Заголовок'
@@ -94,16 +91,6 @@ class Post(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         verbose_name='Категория'
-    )
-    is_published = models.BooleanField(
-        default=True,
-        verbose_name='Опубликовано',
-        help_text='Снимите галочку, чтобы скрыть '
-                  'публикацию.'
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Добавлено'
     )
 
     class Meta:
