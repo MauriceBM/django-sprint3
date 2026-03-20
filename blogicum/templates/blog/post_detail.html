@@ -1,7 +1,13 @@
 {% extends "base.html" %}
+
 {% block title %}
-  {{ post.title }} | {% if post.location and post.location.is_published %}{{ post.location.name }} |{% endif %} {{ post.pub_date|date:"d E Y" }}
+  {{ post.title }} | 
+  {% if post.location and post.location.is_published %}
+    {{ post.location.name }} |
+  {% endif %} 
+  {{ post.pub_date|date:"d E Y" }}
 {% endblock %}
+
 {% block content %}
   <article>
     <p>
@@ -13,7 +19,8 @@
       {% endif %}<br>
       <small>
         От автора @{{ post.author.username }} в категории 
-        {% include "blog/includes/category_link.html" %}
+        {# Передаём категорию в include #}
+        {% include "includes/category_link.html" with category=post.category %}
       </small>
     </p>
     

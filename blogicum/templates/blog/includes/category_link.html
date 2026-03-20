@@ -1,3 +1,4 @@
+{# Отображает ссылку на категорию или просто название #}
 {% if category and category.slug %}
   <a href="{% url 'blog:category_posts' category_slug=category.slug %}">
     {{ category.title }}

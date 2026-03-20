@@ -22,10 +22,10 @@ def index(request):
     return render(request, 'blog/index.html', {'posts': posts})
 
 
-def post_detail(request, id):
+def post_detail(request, post_id):
     post = get_object_or_404(
         Post.objects.select_related('category', 'author', 'location'),
-        pk=id,
+        pk=post_id,
         is_published=True,
         category__is_published=True,
         pub_date__lte=timezone.now()
